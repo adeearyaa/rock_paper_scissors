@@ -1,5 +1,8 @@
 let player = 0;
 let computer = 0;
+let roundsPlayed = 0;
+const roundResult = document.querySelector(".roundResult");
+const scoreResult = document.querySelector(".score");
 
 function getComputerChoice() {
     let randomIndex;
@@ -16,15 +19,15 @@ function playRound(playerChoice, computerChoice) {
     if (playersChoice == "rock") {
         switch(computerChoice) {
             case "rock":
-                console.log("tied round");
+                roundResult.textContent = "you tied";
                 return "tie";
                 break;
             case "scissor":
-                console.log("you lose");
+                roundResult.textContent = "you lost";
                 return "you lose"
                 break;
             case "paper":
-                console.log("you win");
+                roundResult.textContent = "you won";
                 return "you win";
                 break;
             default:
@@ -33,58 +36,74 @@ function playRound(playerChoice, computerChoice) {
     } else if (playersChoice == "scissor") {
         switch(computerChoice) {
             case "rock":
-                console.log("you lose");
+                roundResult.textContent = "you lose";
                 return "you lose";
                 break;
             case "scissor":
-                console.log("tied round");
+                roundResult.textContent = "you tied";
                 return "tie";
                 break;
             case "paper":
-                console.log("you win");
+                roundResult.textContent = "you won";
                 return "you win";
                 break;
         }
     } else {
         switch(computerChoice) {
             case "rock":
-                console.log("you win");
+                roundResult.textContent = "you won";
                 return "you win";
                 break;
             case "scissor":
-                console.log("you lose");
+                roundResult.textContent = "you lose";
                 return "you lose";
                 break;
             case "paper":
-                console.log("tied round");
+                roundResult.textContent = "you tied";
                 return "tie";
                 break;
         }
     }
     }
 
-    function game() {
-        let result;
-        let userChoice;
-        let computerChoice;
-        for (let i = 1; i <= 5; i++) {
-            computerChoice = getComputerChoice()
-            userChoice = prompt("Please enter your choice:");
-            result = playRound(userChoice,computerChoice)
-            if (result == "you lose") {
-                computer = computer + 1
-            } else if (result == "you win") {
-                player = player + 1
-            }
-        }
-        if (player > computer) {
-            console.log("You win the game")
-        } else if (player < computer) {
-            console.log("You lost the game")
-        } else {
-            console.log("This game is tied after 5 rounds")
-        }
+let result;
+let userChoice;
+let computerChoice;
+const rockButton = document.querySelector(".rock");
+const paperButton = document.querySelector(".paper");
+const scissorButton = document.querySelector(".scissors");
+rockButton.addEventListener("click", () => {
+    userChoice = "rock";
+    computerChoice = getComputerChoice()
+    result = playRound(userChoice,computerChoice)
+    if (result == "you win") {
+        player++;
     }
+    scoreResult.textContent = `Your score is ${player}`
+    roundsPlayed += 1 
+});
+paperButton.addEventListener("click", () => {
+    userChoice = "paper"
+    computerChoice = getComputerChoice()
+    result = playRound(userChoice,computerChoice) 
+    if (result == "you win") {
+        player++;
+    }
+    scoreResult.textContent = `Your score is ${player}`
+    roundsPlayed += 1
+});
+scissorButton.addEventListener("click", () => {
+    userChoice = "scissor"
+    computerChoice = getComputerChoice()
+    result = playRound(userChoice,computerChoice)
+    if (result == "you win") {
+        player++;
+    }
+    scoreResult.textContent = `Your score is ${player}`
+    roundsPlayed += 1
+});
 
-game();
+
+
+
 
